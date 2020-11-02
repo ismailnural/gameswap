@@ -1,0 +1,11 @@
+{
+    "name": "GameSwap",
+    "version": "1.0.0",
+    "description": "",
+    "scripts": {
+        "client:dev": "cd client && yarn dev",
+        "server:dev": "cd server && yarn dev"
+    },
+    "author": "",
+    "license": "ISC"
+}
