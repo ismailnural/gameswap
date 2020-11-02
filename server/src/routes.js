@@ -2,6 +2,8 @@ const AuthenticationController = require('./controllers/AuthenticationController
 const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy');
 const SwapsController = require('./controllers/SwapsController');
 
+const isAuthenticated = require('./policies/isAuthenticated');
+
 module.exports = (app) => {
     app.post('/register',
         AuthenticationControllerPolicy.register,
@@ -16,6 +18,7 @@ module.exports = (app) => {
     app.put('/swaps/:swapId',
         SwapsController.put);
     app.post('/swaps',
+        isAuthenticated,
         SwapsController.post);
 
 };

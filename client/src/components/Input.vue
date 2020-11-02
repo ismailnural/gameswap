@@ -56,11 +56,13 @@ export default defineComponent({
     left: 0;
     display: block;
     width: 100%;
-    margin-bottom: 0; /* Override default `<label>` margin */
+    margin-bottom: 0;
+    /* Override default `<label>` margin */
     line-height: 1.5;
     color: #495057;
     pointer-events: none;
-    cursor: text; /* Match the input under the label */
+    cursor: text;
+    /* Match the input under the label */
     border: 1px solid transparent;
     border-radius: 0.25rem;
     transition: all 0.1s ease-in-out;
@@ -98,11 +100,13 @@ export default defineComponent({
     label {
       position: static;
     }
+
     input::-ms-input-placeholder {
       color: #777;
     }
   }
 }
+
 .bd-placeholder-img {
   font-size: 1.125rem;
   text-anchor: middle;

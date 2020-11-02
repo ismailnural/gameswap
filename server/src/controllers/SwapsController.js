@@ -1,27 +1,31 @@
-const { Swap } = require('../models');
+const { Swap, User } = require('../models');
 
 module.exports = {
   async index(req, res) {
     try {
-      let swaps = null;
       const { search } = req.query;
-      if (search) {
-        swaps = await Swap.findAll({
-          where: {
-            $or: [
-              'title', 'description',
-            ].map((key) => ({
-              [key]: {
-                $like: `%${search}%`,
-              },
-            })),
+      const where = {
+        $or: [
+          'title', 'description',
+        ].map((key) => ({
+          [key]: {
+            $like: `%${search}%`,
           },
-        });
-      } else {
-        swaps = await Swap.findAll({
-          limit: 10,
-        });
-      }
+        })),
+      };
+
+      const swaps = await Swap.findAll({
+        limit: 10,
+        where: search ? where : null,
+        order: [
+          ['id', 'DESC'],
+        ],
+        include: {
+          model: User,
+          as: 'user',
+        },
+      });
+
       res.send(swaps);
     } catch (err) {
       res.status(500).send({
@@ -31,7 +35,12 @@ module.exports = {
   },
   async show(req, res) {
     try {
-      const swap = await Swap.findById(req.params.swapId);
+      const swap = await Swap.findByPk(req.params.swapId, {
+        include: {
+          model: User,
+          as: 'user',
+        },
+      });
       res.send(swap);
     } catch (err) {
       res.status(500).send({
@@ -41,7 +50,12 @@ module.exports = {
   },
   async post(req, res) {
     try {
-      const swap = await Swap.create(req.body);
+      const uid = req.user.id;
+      const swap = await Swap.create({
+        uid,
+        status: 1,
+        ...req.body,
+      });
       res.send(swap);
     } catch (err) {
       res.status(500).send({

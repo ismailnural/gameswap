@@ -1,30 +1,27 @@
 import Api from '@/services/Api';
 
-interface SwapModel {
-  id: number;
-  uid: number;
+interface SwapCreateModel {
   title: string;
   description: string;
   coverUrl: string;
   platform: number;
-  status: number;
 }
 
 export default {
-  index(search: string) {
+  index(search?: string) {
     return Api().get('swaps', {
       params: {
         search,
       },
     });
   },
-  show(swapId: string) {
+  show(swapId: number) {
     return Api().get(`swaps/${swapId}`);
   },
-  post(swap: SwapModel) {
+  post(swap: SwapCreateModel) {
     return Api().post('swaps', swap);
   },
-  put(swap: SwapModel) {
-    return Api().put(`swaps/${swap.id}`, swap);
+  put(swapId: number, swap: SwapCreateModel) {
+    return Api().put(`swaps/${swapId}`, swap);
   },
 };

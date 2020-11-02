@@ -40,5 +40,6 @@ export default {
 
 main {
   margin-top: 6rem;
+  margin-bottom: 6rem;
 }
 </style>

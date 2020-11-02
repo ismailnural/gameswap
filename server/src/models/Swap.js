@@ -8,5 +8,9 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.INTEGER,
   });
 
+  Swap.associate = function (models) {
+    Swap.belongsTo(models.User, { foreignKey: 'uid', as: 'user' });
+  };
+
   return Swap;
 };
