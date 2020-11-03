@@ -2,14 +2,14 @@
   <div class="container">
     <div class="row">
       <div class="col-4">
-        <SwapCard :swap="$store.state.swapDetail" page="detail" v-if="$store.state.swapDetail" />
+        <SwapCard v-if="swapDetail" :swap="swapDetail" page="detail" />
       </div>
       <div class="col-8">
         sağ
         <div>Swap Detail</div>
 
         <div>
-          {{ $store.state.swapDetail }}
+          {{ swapDetail }}
         </div>
       </div>
     </div>
@@ -18,6 +18,7 @@
 
 <script>
 import { defineComponent } from 'vue';
+import { mapState } from 'vuex';
 import SwapsService from '@/services/SwapsService';
 import SwapCard from '@/components/SwapCard.vue';
 
@@ -33,6 +34,9 @@ export default defineComponent({
   },
   props: {
     swapId: String,
+  },
+  computed: {
+    ...mapState(['swapDetail']),
   },
   async mounted() {
     try {

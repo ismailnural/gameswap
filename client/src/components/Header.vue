@@ -15,23 +15,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ml-auto">
-        <router-link
-          to="/login"
-          class="nav-link"
-          active-class="active"
-          v-if="!$store.state.isUserLoggedIn"
-        >
+        <router-link to="/login" class="nav-link" active-class="active" v-if="!isUserLoggedIn">
           Giriş <span class="sr-only">(current)</span>
         </router-link>
-        <router-link
-          to="/register"
-          class="nav-link"
-          active-class="active"
-          v-if="!$store.state.isUserLoggedIn"
-        >
+        <router-link to="/register" class="nav-link" active-class="active" v-if="!isUserLoggedIn">
           Kayıt <span class="sr-only">(current)</span>
         </router-link>
-        <router-link to="/" class="nav-link" v-if="$store.state.isUserLoggedIn" @click="logout">
+        <router-link to="/" class="nav-link" v-if="isUserLoggedIn" @click="logout">
           Çıkış <span class="sr-only">(current)</span>
         </router-link>
       </div>
@@ -40,8 +30,13 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Header',
+  computed: {
+    ...mapState(['isUserLoggedIn']),
+  },
   methods: {
     logout() {
       this.$store.dispatch('setToken', null);

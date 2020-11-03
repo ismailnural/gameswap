@@ -4,13 +4,14 @@
       Takaslar yüklenirken bir hata oluştu!
     </div>
     <div class="swap-list" id="swap-list" v-if="!error">
-      <SwapCard v-for="swap in $store.state.swaps" :key="swap.id" :swap="swap" />
+      <SwapCard v-for="swap in swaps" :key="swap.id" :swap="swap" />
     </div>
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue';
+import { mapState } from 'vuex';
 import SwapCard from '@/components/SwapCard.vue';
 import SwapsService from '@/services/SwapsService';
 
@@ -23,6 +24,9 @@ export default defineComponent({
     return {
       error: null,
     };
+  },
+  computed: {
+    ...mapState(['swaps']),
   },
   async mounted() {
     try {
