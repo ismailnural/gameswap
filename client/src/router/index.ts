@@ -44,6 +44,14 @@ const routes: Array<RouteRecordRaw> = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "swap" */ '@/views/Swaps/index.vue'),
   },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    meta: {
+      title: '404 - Sayfa Bulunamadı - GameSwap',
+    },
+    component: () => import(/* webpackChunkName: "NotFound" */ '@/views/NotFound.vue'),
+  },
 ];
 
 const router = createRouter({
