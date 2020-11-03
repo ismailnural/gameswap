@@ -57,8 +57,6 @@ export default {
         });
         this.$store.dispatch('setToken', response.data.token);
         this.$store.dispatch('setUser', response.data.user);
-        localStorage.token = JSON.stringify(response.data.token);
-        localStorage.user = JSON.stringify(response.data.user);
         this.$router.push({
           name: 'Home',
         });

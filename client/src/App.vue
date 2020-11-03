@@ -20,12 +20,6 @@ export default {
       },
     },
   },
-  mounted() {
-    if (localStorage.user && localStorage.token) {
-      this.$store.dispatch('setToken', JSON.parse(localStorage.token));
-      this.$store.dispatch('setUser', JSON.parse(localStorage.user));
-    }
-  },
 };
 </script>
 
