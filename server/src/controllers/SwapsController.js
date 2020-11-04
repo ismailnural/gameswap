@@ -17,7 +17,7 @@ module.exports = {
     try {
       const { or, like } = Sequelize.Op;
       const {
-        search, limit = 10, page = 1, order,
+        search, limit = 10, page = 1, orderBy, orderType,
       } = req.query;
 
       const where = {
@@ -36,8 +36,8 @@ module.exports = {
           model: User,
           as: 'user',
         },
-        order: order || [
-          ['id', 'DESC'],
+        order: [
+          [orderBy || 'id', orderType || 'DESC'],
         ],
         page,
         limit,
