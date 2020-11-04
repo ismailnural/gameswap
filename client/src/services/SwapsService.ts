@@ -8,11 +8,9 @@ interface SwapCreateModel {
 }
 
 export default {
-  index(search?: string) {
+  index(params?: object) {
     return Api().get('swaps', {
-      params: {
-        search,
-      },
+      params,
     });
   },
   show(swapId: number) {

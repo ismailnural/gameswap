@@ -1,32 +1,62 @@
+const Sequelize = require('sequelize');
 const { Swap, User } = require('../models');
+
+const paginate = (query) => {
+  const { page, limit } = query;
+  const offset = (page * limit) - limit;
+
+  return {
+    ...query,
+    offset,
+    limit,
+  };
+};
 
 module.exports = {
   async index(req, res) {
     try {
-      const { search } = req.query;
+      const { or, like } = Sequelize.Op;
+      const {
+        search, limit = 10, page = 1, order,
+      } = req.query;
+
       const where = {
-        $or: [
+        [or]: [
           'title', 'description',
         ].map((key) => ({
           [key]: {
-            $like: `%${search}%`,
+            [like]: `%${search}%`,
           },
         })),
       };
 
-      const swaps = await Swap.findAll({
-        limit: 10,
+      const swaps = await Swap.findAndCountAll(paginate({
         where: search ? where : null,
-        order: [
-          ['id', 'DESC'],
-        ],
         include: {
           model: User,
           as: 'user',
         },
-      });
+        order: order || [
+          ['id', 'DESC'],
+        ],
+        page,
+        limit,
+      }));
 
-      res.send(swaps);
+      const totalItems = swaps.count;
+      const lastPage = Math.ceil(totalItems / limit);
+      const currentPage = Number(page);
+
+      const pagination = {
+        lastPage,
+        currentPage,
+        prevPage: currentPage <= 1 ? null : currentPage - 1,
+        nextPage: currentPage >= lastPage ? null : currentPage + 1,
+        totalItems,
+        perPage: limit,
+      };
+
+      res.send({ data: swaps.rows, pagination });
     } catch (err) {
       res.status(500).send({
         error: 'Takaslar getirilirken bir hata oluştu',

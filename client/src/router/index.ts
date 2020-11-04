@@ -33,6 +33,18 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "register" */ '@/views/Register.vue'),
   },
   {
+    path: '/swaps',
+    name: 'Swaps',
+    props: true,
+    meta: {
+      title: 'Takas Oyun Listesi - GameSwap',
+    },
+    // route level code-splitting
+    // this generates a separate chunk (register.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "swaps" */ '@/views/Swaps/Swaps.vue'),
+  },
+  {
     path: '/swap/:name/:swapId',
     name: 'Swap',
     props: true,

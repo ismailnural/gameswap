@@ -14,7 +14,7 @@ export default defineComponent({
   },
   methods: {
     truncate(text: string, length = 100, suffix = '...'): string {
-      if (text.length > length && length !== -1) {
+      if (text?.length > length && length !== -1) {
         return text.substring(0, length) + suffix;
       }
       return text;

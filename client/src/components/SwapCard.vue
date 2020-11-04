@@ -69,7 +69,7 @@ export default defineComponent({
   },
   computed: {
     slugTitle() {
-      return slug(this.swap.title, { locale: 'tr' });
+      return this.swap.title && slug(this.swap.title, { locale: 'tr' });
     },
     dateFormat() {
       return DATE_FORMAT;
