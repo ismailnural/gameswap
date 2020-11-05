@@ -9,7 +9,7 @@
     <div class="swap-list" id="swap-list" v-if="swaps">
       <SwapCard v-for="swap in swaps.data" :key="swap.id" :swap="swap" />
     </div>
-    <router-link to="/swaps" class="btn btn-primary btn-lg px-5 my-5" v-if="swaps">
+    <router-link :to="{ name: 'Swaps' }" class="btn btn-primary btn-lg px-5 my-5" v-if="swaps">
       Tüm İlanlar
     </router-link>
   </div>

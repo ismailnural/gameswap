@@ -21,7 +21,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'AuthFormContainer',
+  name: 'FormContainer',
   props: {
     title: String,
     description: String,

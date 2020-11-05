@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (login.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "login" */ '@/views/Login.vue'),
+    component: () => import(/* webpackChunkName: "Login" */ '@/views/Login.vue'),
   },
   {
     path: '/register',
@@ -30,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (register.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "register" */ '@/views/Register.vue'),
+    component: () => import(/* webpackChunkName: "Register" */ '@/views/Register.vue'),
   },
   {
     path: '/swaps',
@@ -42,11 +42,22 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (register.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "swaps" */ '@/views/Swaps/Swaps.vue'),
+    component: () => import(/* webpackChunkName: "Swaps" */ '@/views/Swaps/Swaps.vue'),
+  }, {
+    path: '/swap/add',
+    name: 'AddSwap',
+    props: true,
+    meta: {
+      title: 'Yeni Oyun Takası Ekle - GameSwap',
+    },
+    // route level code-splitting
+    // this generates a separate chunk (register.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "AddSwap" */ '@/views/Swaps/Add.vue'),
   },
   {
     path: '/swap/:name/:swapId',
-    name: 'Swap',
+    name: 'SwapDetail',
     props: true,
     meta: {
       title: 'Ücretsiz Oyun Takas - GameSwap',
@@ -54,7 +65,7 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (register.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "swap" */ '@/views/Swaps/index.vue'),
+    component: () => import(/* webpackChunkName: "SwapDetail" */ '@/views/Swaps/Detail.vue'),
   },
   {
     path: '/:pathMatch(.*)*',

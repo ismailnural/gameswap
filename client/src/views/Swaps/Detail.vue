@@ -8,9 +8,7 @@
         sağ
         <div>Swap Detail</div>
 
-        <div>
-          {{ swapDetail }}
-        </div>
+        <div v-text="swapDetail.description" />
       </div>
     </div>
   </div>

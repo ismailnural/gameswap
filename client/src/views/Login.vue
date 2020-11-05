@@ -1,22 +1,26 @@
 <template>
-  <AuthFormContainer title="Giriş" description="Lorem ipsum dolar sit amet" :error="error">
+  <FormContainer title="Giriş" description="Lorem ipsum dolar sit amet" :error="error">
     <Input id="email" type="email" placeholder="E-mail" required autofocus v-model="email" />
 
     <Input id="password" type="password" placeholder="Şifre" required v-model="password" />
 
     <div class="btn btn-lg btn-primary btn-block" @click="login">Gönder</div>
-  </AuthFormContainer>
+
+    <router-link :to="{ name: 'Register' }" class="btn btn-link mt-3">
+      Kayıt Ol
+    </router-link>
+  </FormContainer>
 </template>
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService';
-import AuthFormContainer from '@/components/AuthFormContainer.vue';
+import FormContainer from '@/components/FormContainer.vue';
 import Input from '@/components/Input.vue';
 
 export default {
   components: {
     Input,
-    AuthFormContainer,
+    FormContainer,
   },
   data() {
     return {
@@ -24,6 +28,12 @@ export default {
       password: '',
       error: null,
     };
+  },
+  props: {
+    message: String,
+  },
+  async mounted() {
+    this.error = this.$route.params.message;
   },
   methods: {
     async login() {

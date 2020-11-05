@@ -13,3 +13,19 @@ export const enum STATUS_TEXT {
   ACTIVE = 'Aktif',
   SWAPED = 'Takaslanmış',
 }
+
+export const enum PLATFORMS {
+  WINDOWS = 1,
+  MAC = 2,
+  PLAYSTATION = 3,
+  XBOX = 4,
+  OTHER = 5,
+}
+
+export const enum PLATFORMS_TEXT {
+  WINDOWS = 'Windows',
+  MAC = 'Mac',
+  PLAYSTATION = 'PlayStation',
+  XBOX = 'XBox',
+  OTHER = 'Other',
+}

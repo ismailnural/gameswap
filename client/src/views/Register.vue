@@ -1,5 +1,5 @@
 <template>
-  <AuthFormContainer title="Kayıt" description="Lorem ipsum dolar sit amet" :error="error">
+  <FormContainer title="Kayıt" description="Lorem ipsum dolar sit amet" :error="error">
     <Input id="email" type="email" placeholder="E-mail" required autofocus v-model="email" />
 
     <Input
@@ -20,18 +20,22 @@
     <Input id="phone" placeholder="Telefon No." required v-model="phone" />
 
     <div class="btn btn-lg btn-primary btn-block" @click="register">Gönder</div>
-  </AuthFormContainer>
+
+    <router-link :to="{ name: 'Login' }" class="btn btn-link mt-3">
+      Giriş Yap
+    </router-link>
+  </FormContainer>
 </template>
 
 <script>
 import AuthenticationService from '@/services/AuthenticationService';
-import AuthFormContainer from '@/components/AuthFormContainer.vue';
+import FormContainer from '@/components/FormContainer.vue';
 import Input from '@/components/Input.vue';
 
 export default {
   components: {
     Input,
-    AuthFormContainer,
+    FormContainer,
   },
   data() {
     return {

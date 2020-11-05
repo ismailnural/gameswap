@@ -3,7 +3,7 @@
     <div class="card-photo">
       <router-link
         :to="{
-          name: 'Swap',
+          name: 'SwapDetail',
           params: { name: slugTitle, swapId: swap.id },
         }"
       >
@@ -19,7 +19,7 @@
         <h4 class="card-title">
           <router-link
             :to="{
-              name: 'Swap',
+              name: 'SwapDetail',
               params: { name: slugTitle, swapId: swap.id },
             }"
           >
@@ -33,7 +33,7 @@
       <div class="card-body-bottom">
         <router-link
           :to="{
-            name: 'Swap',
+            name: 'SwapDetail',
             params: { name: slugTitle, swapId: swap.id },
           }"
         >
@@ -64,7 +64,7 @@ export default defineComponent({
   },
   computed: {
     slugTitle() {
-      return this.swap.title && slug(this.swap.title, { locale: 'tr' });
+      return this.swap.title ? slug(this.swap.title, { locale: 'tr' }) : 'game';
     },
     dateFormat() {
       return DATE_FORMAT;

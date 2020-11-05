@@ -1,11 +1,34 @@
 <template>
   <div class="form-label-group">
     <input
+      v-if="!inputType"
       class="form-control"
       v-bind="$props"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
     />
+    <textarea
+      v-if="inputType === 'textarea'"
+      class="form-control"
+      rows="3"
+      v-bind="$props"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+    ></textarea>
+
+    <select
+      v-if="inputType === 'select'"
+      class="form-control"
+      v-bind="$props"
+      :value="modelValue"
+      @input="$emit('update:modelValue', $event.target.value)"
+    >
+      <option value="-1" text="Seçiniz..." disabled />
+      <option v-for="option in inputOptions" :key="option.id" :value="option.id">
+        {{ option.value }}
+      </option>
+    </select>
+
     <label :for="id">{{ placeholder }}</label>
   </div>
 </template>
@@ -19,10 +42,12 @@ export default defineComponent({
     id: String,
     placeholder: String,
     type: String,
+    inputType: String,
     autocomplete: String,
     required: Boolean,
     autofocus: Boolean,
     modelValue: String,
+    inputOptions: Array,
   },
   methods: {
     valueHandler(val: string) {
@@ -45,9 +70,18 @@ export default defineComponent({
   margin-bottom: 1rem;
 
   input,
-  label {
+  label,
+  textarea,
+  select {
     height: 3.125rem;
     padding: 0.75rem;
+  }
+
+  textarea {
+    height: 10rem;
+  }
+  select {
+    padding-left: 0.4rem;
   }
 
   label {
@@ -69,7 +103,9 @@ export default defineComponent({
     text-align: left;
   }
 
-  input {
+  input,
+  textarea,
+  select {
     &::placeholder {
       color: transparent;
     }
@@ -92,16 +128,16 @@ export default defineComponent({
 -------------------------------------------------- */
 @supports (-ms-ime-align: auto) {
   .form-label-group {
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-direction: column-reverse;
     flex-direction: column-reverse;
 
     label {
       position: static;
     }
 
-    input::-ms-input-placeholder {
+    input::-ms-input-placeholder,
+    textarea::-ms-input-placeholder,
+    select::-ms-input-placeholder {
       color: #777;
     }
   }

@@ -11,7 +11,9 @@
           Aradığın sayfa mevcut değil. Buraya nasıl geldiğin de bir muamma ama aşağıdaki linke
           tıklayarak ana sayfaya geri dönebilirsin.
         </p>
-        <router-link class="btn btn-primary btn-lg px-5 my-3" to="/">Ana Sayfa</router-link>
+        <router-link :to="{ name: 'Home' }" class="btn btn-primary btn-lg px-5 my-3">
+          Ana Sayfa
+        </router-link>
       </div>
     </div>
   </div>
