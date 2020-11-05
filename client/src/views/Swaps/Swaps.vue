@@ -52,7 +52,7 @@ export default defineComponent({
       const newQuery = { ...query, page };
 
       try {
-        const swaps = await SwapsService.index({ limit: 12, ...newQuery });
+        const swaps = await SwapsService.index(newQuery);
         this.$store.dispatch('setSwaps', swaps.data);
       } catch (error) {
         this.error = error.response.data.error;
@@ -68,7 +68,7 @@ export default defineComponent({
     const { query } = this.$route;
 
     try {
-      const swaps = await SwapsService.index({ limit: 12, ...query });
+      const swaps = await SwapsService.index(query);
       const { currentPage, lastPage } = swaps.data.pagination;
 
       if (currentPage > lastPage) {
@@ -112,7 +112,7 @@ export default defineComponent({
   grid-template-columns: auto;
 
   @media (min-width: 768px) {
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto;
   }
 }
 .pagination {

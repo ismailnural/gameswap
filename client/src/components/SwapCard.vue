@@ -1,38 +1,36 @@
 <template>
-  <div class="card" :class="cardStyle">
-    <router-link
-      :to="{
-        name: 'Swap',
-        params: { name: slugTitle, swapId: swap.id },
-      }"
-    >
-      <img
-        v-if="swap.coverUrl"
-        class="card-img-top"
-        :class="page === 'detail' && 'detail-page'"
-        :src="swap.coverUrl"
-        :alt="swap.title"
-      />
-      <img
-        v-if="!swap.coverUrl"
-        class="card-img-top"
-        :class="page === 'detail' && 'detail-page'"
-        src="../assets/no-cover.png"
-        :alt="swap.title"
-      />
-    </router-link>
+  <div :class="['card', passiveCardStyle, page === 'detail' && 'detail-page']">
+    <div class="card-photo">
+      <router-link
+        :to="{
+          name: 'Swap',
+          params: { name: slugTitle, swapId: swap.id },
+        }"
+      >
+        <img
+          class="card-img"
+          :src="swap.coverUrl || require('../assets/no-cover.png')"
+          :alt="swap.title"
+        />
+      </router-link>
+    </div>
     <div class="card-body">
-      <h5 class="card-title">
-        <router-link
-          :to="{
-            name: 'Swap',
-            params: { name: slugTitle, swapId: swap.id },
-          }"
-        >
-          {{ swap.title }}
-        </router-link>
-      </h5>
-      <p class="card-text profile-info">
+      <div class="card-body-top">
+        <h4 class="card-title">
+          <router-link
+            :to="{
+              name: 'Swap',
+              params: { name: slugTitle, swapId: swap.id },
+            }"
+          >
+            {{ swap.title }}
+          </router-link>
+        </h4>
+        <p class="card-text">
+          <TruncatedText :text="swap.description" :length="page === 'detail' ? -1 : 140" />
+        </p>
+      </div>
+      <div class="card-body-bottom">
         <router-link
           :to="{
             name: 'Swap',
@@ -41,11 +39,8 @@
         >
           @{{ swap.user.username }}
         </router-link>
-        - <FormatedDateText :date="swap.createdAt" :format="dateFormat" />
-      </p>
-      <p class="card-text">
-        <TruncatedText :text="swap.description" :length="page === 'detail' ? -1 : 100" />
-      </p>
+        <FormatedDateText :date="swap.createdAt" :format="dateFormat" />
+      </div>
     </div>
   </div>
 </template>
@@ -80,8 +75,8 @@ export default defineComponent({
     statusText() {
       return STATUS_TEXT[STATUS[this.swap.status]];
     },
-    cardStyle() {
-      return this.status === STATUS[STATUS.ACTIVE] ? 'active' : 'passive';
+    passiveCardStyle() {
+      return this.status === STATUS[STATUS.ACTIVE] ? '' : 'passive';
     },
   },
 });
@@ -89,28 +84,78 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .card {
+  display: flex;
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+  flex-direction: column;
+
+  .card-photo {
+    position: relative;
+
+    .card-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      min-height: auto;
+      object-fit: fill;
+      object-position: center;
+      border-radius: 0;
+      background: #f6f6f6;
+    }
+  }
+  .card-body {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding-bottom: 0.6rem;
+
+    .card-body-top {
+      flex: 1;
+      margin-bottom: 24px;
+
+      a {
+        font-weight: bold;
+      }
+    }
+    .card-body-bottom {
+      display: flex;
+      font-size: 14px;
+      color: #888;
+      justify-content: space-between;
+    }
+    a,
+    span {
+      color: inherit;
+      font-size: inherit;
+    }
+  }
+
   &.passive {
     opacity: 0.4;
   }
-}
-.card-img-top {
-  max-height: 240px;
-  width: 100%;
-  object-fit: cover;
-  object-position: top;
-
   &.detail-page {
-    max-height: none;
-  }
-}
-.profile-info {
-  font-size: 14px;
-  color: #444;
+    flex-direction: column;
 
-  a,
-  span {
-    color: inherit;
-    font-size: inherit;
+    .card-photo {
+      .card-img {
+        width: 100%;
+        height: auto;
+        min-height: auto;
+      }
+    }
+  }
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+
+    .card-photo {
+      .card-img {
+        width: 160px;
+        height: 100%;
+        min-height: 200px;
+      }
+    }
   }
 }
 </style>
