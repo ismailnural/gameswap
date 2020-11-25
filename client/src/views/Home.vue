@@ -29,15 +29,13 @@ export default defineComponent({
   data() {
     return {
       error: null,
+      swaps: [],
     };
-  },
-  computed: {
-    ...mapState(['swaps']),
   },
   async mounted() {
     try {
       const swaps = await SwapsService.index();
-      this.$store.dispatch('setSwaps', swaps.data);
+      this.swaps = swaps.data;
     } catch (error) {
       this.error = error.response.data.error;
     }

@@ -3,16 +3,15 @@
     <div v-if="error">
       Takaslar yüklenirken bir hata oluştu!
     </div>
-    <div class="swap-list" id="swap-list" v-if="swaps">
-      <SwapCard v-for="swap in swaps.data" :key="swap.id" :swap="swap" />
+    <div class="swap-list" id="swap-list" v-if="swapList">
+      <SwapCard v-for="swap in swapList?.data" :key="swap.id" :swap="swap" />
     </div>
-    <nav class="pagination justify-content-center">
+    <nav class="pagination justify-content-center" v-if="swapList?.pagination">
       <pagination
         v-model="page"
-        :records="swaps.pagination.totalItems"
-        :per-page="Number(swaps.pagination.perPage)"
+        :records="swapList.pagination.totalItems"
+        :per-page="Number(swapList.pagination.perPage)"
         @paginate="changePage"
-        v-if="swaps.pagination"
         :options="{
           texts: {
             count: '',
@@ -25,7 +24,6 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { mapState } from 'vuex';
 import SwapCard from '@/components/SwapCard.vue';
 import SwapsService from '@/services/SwapsService';
 import Pagination from 'v-pagination-3';
@@ -40,28 +38,36 @@ export default defineComponent({
     return {
       error: null,
       page: 1,
+      swapList: [],
     };
-  },
-  computed: {
-    ...mapState(['swaps']),
   },
   methods: {
     async changePage(page) {
       const { query } = this.$route;
-
       const newQuery = { ...query, page };
 
       try {
         const swaps = await SwapsService.index(newQuery);
-        this.$store.dispatch('setSwaps', swaps.data);
+        this.swapList = swaps.data;
       } catch (error) {
         this.error = error.response.data.error;
       }
-
+      this.page = page || 1;
       this.$router.push({
         name: 'Swaps',
         query: newQuery,
       });
+    },
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      async handler(route) {
+        const { query } = route;
+        if (!Object.keys(query).length) {
+          this.page = 1;
+        }
+      },
     },
   },
   async mounted() {
@@ -78,7 +84,7 @@ export default defineComponent({
         };
 
         const newSwaps = await SwapsService.index(newQuery);
-        this.$store.dispatch('setSwaps', newSwaps.data);
+        this.swapList = newSwaps.data;
 
         this.$router.push({
           name: 'Swaps',
@@ -87,7 +93,7 @@ export default defineComponent({
 
         this.page = Number(newQuery.page);
       } else {
-        this.$store.dispatch('setSwaps', swaps.data);
+        this.swapList = swaps.data;
         this.page = Number(query.page || 1);
       }
     } catch (error) {

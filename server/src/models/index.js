@@ -17,7 +17,6 @@ fs
   .filter((file) => file !== 'index.js')
   .forEach((file) => {
     /* eslint-disable */
-    // const model = sequelize.import(require(path.join(__dirname, file)));
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
     db[model.name] = model;
   });

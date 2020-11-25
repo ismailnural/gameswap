@@ -27,7 +27,7 @@
           :to="{ name: 'Login' }"
           class="nav-link"
           active-class="active"
-          v-if="!isUserLoggedIn"
+          v-if="!$store.state.isUserLoggedIn"
         >
           Giriş <span class="sr-only">(current)</span>
         </router-link>
@@ -35,11 +35,16 @@
           :to="{ name: 'Register' }"
           class="nav-link"
           active-class="active"
-          v-if="!isUserLoggedIn"
+          v-if="!$store.state.isUserLoggedIn"
         >
           Kayıt <span class="sr-only">(current)</span>
         </router-link>
-        <router-link :to="{ name: 'Home' }" class="nav-link" v-if="isUserLoggedIn" @click="logout">
+        <router-link
+          :to="{ name: 'Home' }"
+          class="nav-link"
+          v-if="$store.state.isUserLoggedIn"
+          @click="logout"
+        >
           Çıkış <span class="sr-only">(current)</span>
         </router-link>
       </div>
@@ -48,12 +53,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-
 export default {
   name: 'Header',
-  computed: {
-    ...mapState(['isUserLoggedIn']),
+  data() {
+    return {
+      isUserLoggedIn: this.$store.state.isUserLoggedIn,
+    };
   },
   methods: {
     logout() {

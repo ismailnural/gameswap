@@ -8,7 +8,7 @@
         sağ
         <div>Swap Detail</div>
 
-        <div v-text="swapDetail.description" />
+        <div v-text="swapDetail?.description" />
       </div>
     </div>
   </div>
@@ -28,18 +28,16 @@ export default defineComponent({
   data() {
     return {
       error: null,
+      swapDetail: null,
     };
   },
   props: {
     swapId: String,
   },
-  computed: {
-    ...mapState(['swapDetail']),
-  },
   async mounted() {
     try {
       const swap = await SwapsService.show(this.swapId);
-      this.$store.dispatch('setSwapDetail', swap.data);
+      this.swapDetail = swap.data;
       document.title = `${swap.data.title} Ücretsiz Takas - GameSwap`;
     } catch (error) {
       this.error = error.response.data.error;

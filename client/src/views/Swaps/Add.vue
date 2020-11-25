@@ -40,6 +40,7 @@ export default {
   },
   data() {
     return {
+      isUserLoggedIn: this.$store.state.isUserLoggedIn,
       title: '',
       description: '',
       coverUrl: '',
@@ -71,9 +72,6 @@ export default {
         this.error = error.response.data[0].message;
       }
     },
-  },
-  computed: {
-    ...mapState(['isUserLoggedIn']),
   },
   async beforeMount() {
     if (!this.isUserLoggedIn) {
