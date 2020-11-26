@@ -35,9 +35,22 @@ module.exports = (sequelize, DataTypes) => {
       beforeCreate: hashPassword,
       beforeUpdate: hashPassword,
     },
+    defaultScope: {
+      attributes: ['id', 'username', 'firstname', 'lastname'],
+    },
+    scopes: {
+      activeTradeScope: {
+        attributes: ['email', 'phone'],
+      },
+    },
   });
 
   User.prototype.comparePassword = () => (password) => bcrypt.compareAsync(password, this.password);
+
+  User.associate = (models) => {
+    User.hasMany(models.Swap, { foreignKey: 'uid', as: 'swaps' });
+    User.hasMany(models.Offer, { foreignKey: 'uid', as: 'offers' });
+  };
 
   return User;
 };

@@ -40,7 +40,7 @@ const routes: Array<RouteRecordRaw> = [
       title: 'Takas Oyun Listesi - GameSwap',
     },
     // route level code-splitting
-    // this generates a separate chunk (register.[hash].js) for this route
+    // this generates a separate chunk (swaps/swaps.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "Swaps" */ '@/views/Swaps/Swaps.vue'),
   }, {
@@ -51,7 +51,7 @@ const routes: Array<RouteRecordRaw> = [
       title: 'Yeni Oyun Takası Ekle - GameSwap',
     },
     // route level code-splitting
-    // this generates a separate chunk (register.[hash].js) for this route
+    // this generates a separate chunk (swaps/add.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "AddSwap" */ '@/views/Swaps/Add.vue'),
   },
@@ -63,9 +63,21 @@ const routes: Array<RouteRecordRaw> = [
       title: 'Ücretsiz Oyun Takas - GameSwap',
     },
     // route level code-splitting
-    // this generates a separate chunk (register.[hash].js) for this route
+    // this generates a separate chunk (swaps/detail.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "SwapDetail" */ '@/views/Swaps/Detail.vue'),
+  },
+  {
+    path: '/profile/:name/:userId',
+    name: 'ProfileDetail',
+    props: true,
+    meta: {
+      title: 'Ücretsiz Oyun Takas - GameSwap',
+    },
+    // route level code-splitting
+    // this generates a separate chunk (profile/detail.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "ProfileDetail" */ '@/views/Profile/Detail.vue'),
   },
   {
     path: '/:pathMatch(.*)*',

@@ -17,7 +17,6 @@
 
 <script>
 import { defineComponent } from 'vue';
-import { mapState } from 'vuex';
 import SwapCard from '@/components/SwapCard.vue';
 import SwapsService from '@/services/SwapsService';
 

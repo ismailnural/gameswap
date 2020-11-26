@@ -33,11 +33,11 @@
       <div class="card-body-bottom">
         <router-link
           :to="{
-            name: 'SwapDetail',
-            params: { name: slugTitle, swapId: swap.id },
+            name: 'ProfileDetail',
+            params: { name: slugUsername, userId: swap.user.id },
           }"
         >
-          @{{ swap.user.username }}
+          @{{ swap?.user?.username }}
         </router-link>
         <FormatedDateText :date="swap.createdAt" :format="dateFormat" />
       </div>
@@ -65,6 +65,9 @@ export default defineComponent({
   computed: {
     slugTitle() {
       return this.swap.title ? slug(this.swap.title, { locale: 'tr' }) : 'game';
+    },
+    slugUsername() {
+      return this.swap.user.username ? slug(this.swap.user.username, { locale: 'tr' }) : 'user';
     },
     dateFormat() {
       return DATE_FORMAT;

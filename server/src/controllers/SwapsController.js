@@ -19,6 +19,9 @@ module.exports = {
       const {
         search, limit = 10, page = 1, orderBy, orderType,
       } = req.query;
+      const {
+        userId,
+      } = req.params;
 
       const where = {
         [or]: [
@@ -28,10 +31,15 @@ module.exports = {
             [like]: `%${search}%`,
           },
         })),
+        [or]: [
+          {
+            uid: userId,
+          },
+        ],
       };
 
       const swaps = await Swap.findAndCountAll(paginate({
-        where: search ? where : null,
+        where: userId || search ? where : null,
         include: {
           model: User,
           as: 'user',

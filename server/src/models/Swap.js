@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Swap.associate = (models) => {
     Swap.belongsTo(models.User, { foreignKey: 'uid', as: 'user' });
+    Swap.hasMany(models.Offer, { foreignKey: 'uid', as: 'offers' });
   };
 
   return Swap;

@@ -3,12 +3,9 @@ const Joi = require('joi');
 module.exports = {
   add(req, res, next) {
     const schema = Joi.object({
-      title: Joi.string().min(3)
-        .required(),
       description: Joi.string().min(20)
         .required(),
-      coverUrl: Joi.string().uri(),
-      platform: Joi.number().positive().required(),
+      swapid: Joi.number().positive().required(),
     });
 
     const { error } = schema.validate(req.body);

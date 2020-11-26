@@ -21,12 +21,11 @@
       v-model="platform"
     />
 
-    <div class="btn btn-lg btn-primary btn-block" @click="register">Gönder</div>
+    <div class="btn btn-lg btn-primary btn-block" @click="send">Gönder</div>
   </FormContainer>
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import slug from 'slug';
 import SwapsService from '@/services/SwapsService';
 import FormContainer from '@/components/FormContainer.vue';
@@ -56,7 +55,7 @@ export default {
     };
   },
   methods: {
-    async register() {
+    async send() {
       try {
         const response = await SwapsService.post({
           title: this.title,

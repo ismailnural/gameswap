@@ -11148,6 +11148,11 @@ vue-eslint-parser@^7.0.0, vue-eslint-parser@^7.1.1:
     esquery "^1.0.1"
     lodash "^4.17.15"
 
+vue-final-modal@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/vue-final-modal/-/vue-final-modal-1.6.1.tgz#aa2056bede2bb70475ff907654cbbc32ce28384b"
+  integrity sha512-1nT0HjlygMvK/kCi6myNHMT+wN5nrvpARAils22BWQmUGJ9R3YHqGR+6ugKWN247P4JESypMkVN0w63SyZErFg==
+
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
@@ -11218,6 +11223,11 @@ vue-template-es2015-compiler@^1.6.0, vue-template-es2015-compiler@^1.9.0:
   version "1.9.1"
   resolved "https://registry.npm.taobao.org/vue-template-es2015-compiler/download/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha1-HuO8mhbsv1EYvjNLsV+cRvgvWCU=
+
+vue-toastification@^2.0.0-beta.7:
+  version "2.0.0-beta.7"
+  resolved "https://registry.yarnpkg.com/vue-toastification/-/vue-toastification-2.0.0-beta.7.tgz#48d4033a59d867ddf9935197dd9e3fa0cefff39f"
+  integrity sha512-V6Cdg5vOje1xu4HfdY4hxUORNkq9PiCe0hHjgSFUIj59EuxlzI67nPyoifg0LY1qsCENX5ZONWkDkStZZzyRYg==
 
 vue@>=3.0.0, vue@^3.0.0:
   version "3.0.2"
