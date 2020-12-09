@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 export default defineComponent({
   name: 'FormatedDateText',
@@ -14,7 +14,7 @@ export default defineComponent({
   },
   methods: {
     formatDate(date: string, format = 'DD/MM/YYYY hh:mm'): string {
-      return moment(String(date)).format(format);
+      return dayjs(String(date)).format(format);
     },
   },
 });

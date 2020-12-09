@@ -27,7 +27,7 @@ export default {
 
 <style scoped lang="scss">
 img {
-  width: 100;
+  width: 100%;
 }
 h1 {
   font-size: 7.5em;

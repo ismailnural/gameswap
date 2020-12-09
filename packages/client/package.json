@@ -15,7 +15,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
-    "moment": "^2.29.1",
+    "dayjs": "^1.9.7",
     "slug": "^4.0.2",
     "v-pagination-3": "^0.1.2",
     "vue": "^3.0.0",
