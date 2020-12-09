@@ -1,11 +1,29 @@
 {
-    "name": "GameSwap",
+    "name": "game-swap-monorepo",
     "version": "1.0.0",
     "description": "",
+    "author": "İsmail NURAL @ismailnural",
+    "license": "MIT",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
     "scripts": {
-        "client:dev": "cd client && yarn dev",
-        "server:dev": "cd server && yarn dev"
+        "dev": "lerna run dev",
+        "lerna:clean": "lerna run clean",
+        "lerna:lint": "lerna run lint",
+        "lerna:test": "lerna run test",
+        "lerna:bootstrap": "lerna bootstrap",
+        "lerna:create": "lerna create",
+        "client:dev": "cd packages/client && yarn dev",
+        "server:dev": "cd packages/server && yarn dev"
     },
-    "author": "",
-    "license": "ISC"
+    "devDependencies": {
+        "eslint": "^7.15.0",
+        "lerna": "^3.22.1",
+        "prettier": "^2.2.1",
+        "concurrently": "^5.3.0",
+        "@vue/cli-service": "~4.5.9",
+        "@vue/cli-plugin-eslint": "~4.5.9"
+    }
 }

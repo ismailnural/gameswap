@@ -1,8 +1,10 @@
 {
-  "name": "GameSwap",
+  "name": "game-swap-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "author": "",
+  "license": "MIT",
   "scripts": {
     "dev": "yarn start",
     "start": "nodemon src/app.js --exec  \"yarn lint && node\"",
@@ -10,8 +12,6 @@
     "lint:fix": "eslint src/**/*.js  --fix",
     "seed": "node seed"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.7.2",
