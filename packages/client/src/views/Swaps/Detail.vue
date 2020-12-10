@@ -41,8 +41,18 @@
           <div class="card-body" v-if="!offerList?.pagination?.totalItems">
             <div class="card">
               <div class="card-body">
-                <p class="card-text text-center">
+                <p
+                  class="card-text text-center"
+                  v-if="STATUS[$route.params?.statusType?.toUpperCase()] != STATUS.PASSIVE"
+                >
                   Bu takasa henüz teklif verilmemiş! <br />İlk teklifi sen ver, şansını arttır.
+                  <a class="btn btn-link m-0 p-0" @click="showModalHandler"> Teklif Gönder </a>
+                </p>
+                <p
+                  class="card-text text-center"
+                  v-if="STATUS[$route.params?.statusType?.toUpperCase()] == STATUS.PASSIVE"
+                >
+                  Bu takasın pasif teklifi bulunmuyor! <br />Hemen şimdi bir teklif ver.
                   <a class="btn btn-link m-0 p-0" @click="showModalHandler"> Teklif Gönder </a>
                 </p>
               </div>
@@ -136,6 +146,7 @@ export default defineComponent({
       offerList: [],
       description: '',
       showModal: false,
+      STATUS,
     };
   },
   props: {
