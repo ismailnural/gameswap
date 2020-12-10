@@ -4,7 +4,7 @@
       <router-link
         :to="{
           name: 'SwapDetail',
-          params: { name: slugTitle, swapId: swap.id },
+          params: { name: slugTitle, swapId: swap.id, statusType: '' },
         }"
       >
         <img
@@ -20,7 +20,7 @@
           <router-link
             :to="{
               name: 'SwapDetail',
-              params: { name: slugTitle, swapId: swap.id },
+              params: { name: slugTitle, swapId: swap.id, statusType: '' },
             }"
           >
             {{ swap.title }}

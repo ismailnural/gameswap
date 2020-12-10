@@ -56,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "AddSwap" */ '@/views/Swaps/Add.vue'),
   },
   {
-    path: '/swap/:name/:swapId',
+    path: '/swap/:name/:swapId/:statusType?',
     name: 'SwapDetail',
     props: true,
     meta: {

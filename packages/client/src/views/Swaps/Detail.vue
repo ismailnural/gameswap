@@ -9,22 +9,22 @@
           <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
               <li class="nav-item">
-                <a
-                  href="#"
-                  :class="['nav-link', statusType === '1' && 'active']"
-                  @click="changeStatusType('1')"
+                <router-link
+                  :to="{ params: { statusType: '' } }"
+                  class="nav-link"
+                  active-class="active"
                 >
                   Aktif Teklifler
-                </a>
+                </router-link>
               </li>
               <li class="nav-item">
-                <a
-                  href="#"
-                  :class="['nav-link', statusType === '0' && 'active']"
-                  @click="changeStatusType('0')"
+                <router-link
+                  :to="{ params: { statusType: 'passive' } }"
+                  class="nav-link"
+                  active-class="active"
                 >
                   Pasif Teklifler
-                </a>
+                </router-link>
               </li>
               <li class="ml-auto">
                 <button class="btn btn-outline-success btn-sm" @click="showModalHandler">
@@ -43,9 +43,7 @@
               <div class="card-body">
                 <p class="card-text text-center">
                   Bu takasa henüz teklif verilmemiş! <br />İlk teklifi sen ver, şansını arttır.
-                  <a class="btn btn-link m-0 p-0" @click="showModalHandler">
-                    Teklif Gönder
-                  </a>
+                  <a class="btn btn-link m-0 p-0" @click="showModalHandler"> Teklif Gönder </a>
                 </p>
               </div>
             </div>
@@ -113,6 +111,7 @@ import Pagination from 'v-pagination-3';
 import FormContainer from '@/components/FormContainer.vue';
 import Input from '@/components/Input.vue';
 import { useToast } from 'vue-toastification';
+import { STATUS } from '@/shared/constants';
 
 export default defineComponent({
   name: 'SwapDetail',
@@ -134,7 +133,6 @@ export default defineComponent({
       error: null,
       swapDetail: null,
       page: 1,
-      statusType: '1',
       offerList: [],
       description: '',
       showModal: false,
@@ -142,38 +140,27 @@ export default defineComponent({
   },
   props: {
     swapId: String,
+    statusType: String,
   },
   methods: {
-    async changePage(page) {
-      const { query } = this.$route;
-      const newQuery = { ...query, page };
+    async getOffers() {
+      const { query, params } = this.$route;
+      const statusType = STATUS[params?.statusType?.toUpperCase()] ?? STATUS.ACTIVE;
 
       try {
-        const offers = await OffersService.show(this.swapId, newQuery);
+        const offers = await OffersService.show(this.swapId, {
+          ...query,
+          ...params,
+          statusType,
+        });
         this.offerList = offers.data;
       } catch (error) {
         this.error = error.response.data.error;
       }
-      this.page = page || 1;
-      this.$router.push({
-        name: 'SwapDetail',
-        query: newQuery,
-      });
     },
-    async changeStatusType(statusType) {
-      this.page = 1;
-      this.$nextTick(async () => {
-        this.statusType = statusType || '1';
-        try {
-          const offers = await OffersService.show(this.swapId, { statusType });
-          this.offerList = offers.data;
-          this.$router.push({
-            name: 'SwapDetail',
-            query: { statusType },
-          });
-        } catch (error) {
-          this.error = error.response.data.error;
-        }
+    changePage(page) {
+      this.$router.push({
+        query: { page },
       });
     },
     async sendOffer() {
@@ -184,8 +171,12 @@ export default defineComponent({
         });
         if (response) {
           this.toast.success('Teklifiniz başarıyla gönderildi!');
-          this.changePage(1);
-          this.changeStatusType('1');
+          this.$router.push({
+            query: { page: 1 },
+            params: {
+              statusType: '',
+            },
+          });
           this.showModal = false;
           this.description = '';
         }
@@ -205,51 +196,26 @@ export default defineComponent({
       }
     },
   },
-  // watch: {
-  //   $route: {
-  //     immediate: true,
-  //     async handler(route) {
-  //       const { query } = route;
-  //       // console.log('query.include(page):: ', query.has('page'));
-  //       console.log('!!!!!!!!::::: ', !query.page);
-  //       console.log('query:: ', query);
-  //       if (!Object.keys(query).length || !query.page) {
-  //         this.page = 1;
-  //       }
-  //     },
-  //   },
-  // },
+  watch: {
+    $route: {
+      immediate: true,
+      handler(newProps, oldProps) {
+        if (oldProps?.params?.statusType !== newProps?.params?.statusType) {
+          this.page = 1;
+        }
+        if (newProps?.query?.page && oldProps?.query?.page !== newProps?.query?.page) {
+          this.page = newProps?.query?.page;
+        }
+        this.getOffers();
+      },
+    },
+  },
   async mounted() {
-    const { query } = this.$route;
     // Takas detayını çek
     try {
       const swap = await SwapsService.show(this.swapId);
       this.swapDetail = swap.data;
       document.title = `${swap.data.title} Ücretsiz Takas - GameSwap`;
-    } catch (error) {
-      this.error = error.response.data.error;
-    }
-    // Takas tekliflerini çek
-    try {
-      const offers = await OffersService.show(this.swapId, query);
-      const { currentPage, lastPage } = offers.data.pagination;
-
-      if (currentPage > lastPage) {
-        const newQuery = {
-          ...query,
-          page: lastPage,
-        };
-        const newOffers = await OffersService.show(this.swapId, newQuery);
-        this.offerList = newOffers.data;
-        this.$router.push({
-          name: 'SwapDetail',
-          query: newQuery,
-        });
-        this.page = Number(newQuery.page);
-      } else {
-        this.offerList = offers.data;
-        this.page = Number(query.page || 1);
-      }
     } catch (error) {
       this.error = error.response.data.error;
     }
